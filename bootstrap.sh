@@ -2,6 +2,7 @@
 
 ELASTICSEARCH_VERSION="1.1.1"
 
+echo "Running apt-get update"
 sudo apt-get update
 
 echo "Installing tools and dependencies"

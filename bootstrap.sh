@@ -26,7 +26,7 @@ curl -XPOST 'http://localhost:9200/megacorp/employee/1' -d '
    ]
 }'
 
-curl -XPOST 'http://localhost:9200/megacorp/employee/2 -d '
+curl -XPOST 'http://localhost:9200/megacorp/employee/2' -d '
 {
    "first_name": "Jane",
    "last_name": "Smith",
@@ -37,7 +37,7 @@ curl -XPOST 'http://localhost:9200/megacorp/employee/2 -d '
    ]
 }'
 
-curl -XPOST 'http://localhost:9200/megacorp/employee/3 -d '
+curl -XPOST 'http://localhost:9200/megacorp/employee/3' -d '
 {
    "first_name": "Douglas",
    "last_name": "Fir",

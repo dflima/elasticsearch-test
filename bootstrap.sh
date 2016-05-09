@@ -4,7 +4,8 @@ ELASTICSEARCH_VERSION="1.1.1"
 
 sudo apt-get update
 
-sudo apt-get install curl vim -y
+echo "Installing tools and dependencies"
+sudo apt-get install curl vim unzip htop -y
 sudo apt-get install openjdk-7-jre-headless -y
 
 #wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/$ELASTICSEARCH_VERSION/elasticsearch-$ELASTICSEARCH_VERSION.deb

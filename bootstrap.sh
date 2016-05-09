@@ -21,3 +21,6 @@ cd elasticsearch-$ELASTICSEARCH_VERSION
 
 echo "Installing Head Plugin on Elasticsearch"
 sudo ./bin/plugin -install mobz/elasticsearch-head > /dev/null
+
+echo "Starting Elasticsearch ($ELASTICSEARCH_VERSION)"
+./bin/elasticsearch -d

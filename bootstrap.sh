@@ -22,5 +22,7 @@ cd elasticsearch-$ELASTICSEARCH_VERSION
 echo "Installing Head Plugin on Elasticsearch"
 sudo ./bin/plugin -install mobz/elasticsearch-head > /dev/null
 
+echo "cluster.name: elasticsearch-danilo" >> config/elasticsearch.yml
+
 echo "Starting Elasticsearch ($ELASTICSEARCH_VERSION)"
 ./bin/elasticsearch -d

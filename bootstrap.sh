@@ -8,10 +8,16 @@ echo "Installing tools and dependencies"
 sudo apt-get install curl vim unzip htop -y
 sudo apt-get install openjdk-7-jre-headless -y
 
-#wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/$ELASTICSEARCH_VERSION/elasticsearch-$ELASTICSEARCH_VERSION.deb
-wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.deb
-sudo dpkg -i elasticsearch-$ELASTICSEARCH_VERSION.deb
-sudo service elasticsearch start
+if [ ! -f elasticsearch-$ELASTICSEARCH_VERSION.zip ]; then
+    echo "Downloading Elasticsearch ($ELASTICSEARCH_VERSION)"
+    wget -o /dev/null https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.zip
+fi
 
-sudo /usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head
+if [ ! -d elasticsearch-$ELASTICSEARCH_VERSION ]; then
+    unzip elasticsearch-$ELASTICSEARCH_VERSION
+fi
 
+cd elasticsearch-$ELASTICSEARCH_VERSION
+
+echo "Installing Head Plugin on Elasticsearch"
+sudo ./bin/plugin -install mobz/elasticsearch-head > /dev/null

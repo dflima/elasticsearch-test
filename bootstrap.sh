@@ -1,29 +1,27 @@
 #!/usr/bin/env bash
 
-ELASTICSEARCH_VERSION="1.1.1"
+sudo su -
 
-echo "Running apt-get update"
-sudo apt-get update
+apt-get update
 
-echo "Installing tools and dependencies"
-sudo apt-get install curl vim unzip htop -y
-sudo apt-get install openjdk-7-jre-headless -y
+apt-get install -y python-software-properties
+add-apt-repository ppa:webupd8team/java
+apt-get update -qq
 
-if [ ! -f elasticsearch-$ELASTICSEARCH_VERSION.zip ]; then
-    echo "Downloading Elasticsearch ($ELASTICSEARCH_VERSION)"
-    wget -o /dev/null https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$ELASTICSEARCH_VERSION.zip
-fi
+echo debconf shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-set-selections
 
-if [ ! -d elasticsearch-$ELASTICSEARCH_VERSION ]; then
-    unzip elasticsearch-$ELASTICSEARCH_VERSION
-fi
+apt-get install -y oracle-java8-installer
+yes "" | apt-get -f install
 
-cd elasticsearch-$ELASTICSEARCH_VERSION
+wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.2/elasticsearch-2.3.2.deb
+dpkg -i elasticsearch-2.3.2.deb
+update-rc.d elasticsearch 95 10
+/etc/init.d/elasticsearch start
 
-echo "Installing Head Plugin on Elasticsearch"
-sudo ./bin/plugin -install mobz/elasticsearch-head > /dev/null
+echo "network.bind_host: 0" >> /etc/elasticsearch/elasticsearch.yml
+echo "network.host: 0.0.0.0" >> /etc/elasticsearch/elasticsearch.yml
+echo "http.cors.enabled: true" >> /etc/elasticsearch/elasticsearch.yml
+echo "http.cors.allow-origin: /https?:\/\/.*/" >> /etc/elasticsearch/elasticsearch.yml
 
-echo "cluster.name: elasticsearch-danilo" >> config/elasticsearch.yml
-
-echo "Starting Elasticsearch ($ELASTICSEARCH_VERSION)"
-./bin/elasticsearch -d
+/etc/init.d/elasticsearch restart

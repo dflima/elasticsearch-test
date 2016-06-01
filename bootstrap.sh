@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+ELASTICSEARCH_VERSION="2.3.2"
+
 sudo su -
 
 apt-get update
@@ -14,8 +16,8 @@ echo debconf shared/accepted-oracle-license-v1-1 seen true | /usr/bin/debconf-se
 apt-get install -y oracle-java8-installer
 yes "" | apt-get -f install
 
-wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.2/elasticsearch-2.3.2.deb
-dpkg -i elasticsearch-2.3.2.deb
+wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.2/elasticsearch-$ELASTICSEARCH_VERSION.deb
+dpkg -i elasticsearch-$ELASTICSEARCH_VERSION.deb
 update-rc.d elasticsearch 95 10
 /etc/init.d/elasticsearch start
 
